@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  api: 
+    build: .
+    user: node
+    working_dir: /opt/app
+    command: npm run start:dev
+    volumes:
+      - ../../:/opt/app
+    networks:
+      - borrow
+    ports:
+      - 4000:3000
+    links:
+      - postgres 
+    depends_on:
+      - postgres  
+  postgres:
+    image: postgres 
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 40102:5432
+    networks:
+      - borrow
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD} 
+    ports:
+      - '${PGADMIN_PORT:-40103}:80'
+    networks:
+      - borrow
+  
+networks:
+  borrow:
+
+volumes: 
+  postgres:  

@@ -11,6 +11,8 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { UserModel } from '../../domains/models/user.model';
+import { GetUsersCommand } from '../queries/commands';
 
 
 @ApiTags('borrow/money')
@@ -20,9 +22,8 @@ export class MoneyController {
               private readonly queryBus: QueryBus) {
   }
 
-  @Get('items')
-  @ApiQuery({name: 'query', required: false})
-  async getItems(@Query('query') query: string): Promise<any> {
-    return 1
+  @Get('users') 
+  async getUsers(): Promise<UserModel[]> {
+    return await this.queryBus.execute(new GetUsersCommand());
   }
 }
