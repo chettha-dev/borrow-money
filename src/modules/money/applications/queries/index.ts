@@ -1,7 +1,11 @@
-import { GetUsersHandler } from "./handlers";
+import { GetTransactionHandler, GetUserByIdHandler, GetUsersHandler } from './handlers';
+import { GetBorrowByUserHandler } from './handlers/get-borrow-by-user.handler';
 
 export const Queries = {
   handlers: [
-    GetUsersHandler
+    GetUsersHandler,
+    GetUserByIdHandler,
+    GetBorrowByUserHandler,
+    GetTransactionHandler
   ]
 }
